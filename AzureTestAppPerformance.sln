@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureTestAppPerformance", "AzureTestAppPerformance\AzureTestAppPerformance.csproj", "{649EBDE1-2748-4781-933E-4CD7DE785D20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureTestAppPerformanceTest", "AzureTestAppPerformanceTest\AzureTestAppPerformanceTest.csproj", "{2DBAF179-6351-492C-9418-138B5B8CF7DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{649EBDE1-2748-4781-933E-4CD7DE785D20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{649EBDE1-2748-4781-933E-4CD7DE785D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{649EBDE1-2748-4781-933E-4CD7DE785D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{649EBDE1-2748-4781-933E-4CD7DE785D20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DBAF179-6351-492C-9418-138B5B8CF7DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DBAF179-6351-492C-9418-138B5B8CF7DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DBAF179-6351-492C-9418-138B5B8CF7DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DBAF179-6351-492C-9418-138B5B8CF7DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B8F1973D-71AF-4CFE-9E43-4EF673D0332D}
+	EndGlobalSection
+EndGlobal

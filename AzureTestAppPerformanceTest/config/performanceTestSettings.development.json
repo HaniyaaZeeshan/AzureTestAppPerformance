@@ -1,0 +1,9 @@
+{
+  "PerformanceTestSettings": {
+    "WarmUpDurationInSeconds": 5,
+    "LoadSimulation": {
+      "UserCount": 100,
+      "DurationInSeconds": 60
+    }
+  }
+}
