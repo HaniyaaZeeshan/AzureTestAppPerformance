@@ -1,41 +1,43 @@
-﻿
-
-using AzureTestAppPerformanceTest.config;
-using AzureTestAppPerformanceTest.Models;
+﻿using AzureTestAppPerformanceTest.config;
 using AzureTestAppPerformanceTest.Services;
 using AzureTestAppPerformanceTest.Tests;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NBomber.CSharp;
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using VRI.Integrations.Connectors.Interfaces;
+using VRI.Integrations.Connectors.Services;
 
-namespace AzureTestAppPerformanceTest
-{
-    class Program
+var builder = Host.CreateDefaultBuilder(args)
+    .ConfigureServices((context, services) =>
     {
-        public static async Task Main(string[] args)
-        {
-            var serviceCollection = new ServiceCollection();
-            // Register services
-            serviceCollection.AddSingleton<IShopifyConfiguration>();
-            serviceCollection.AddSingleton<AppConfig>(); // Load app config
-            serviceCollection.AddSingleton<HttpClient>();
-            serviceCollection.AddSingleton<PerformanceTestConfig>(); // Add the PerformanceTestConfig
-            serviceCollection.AddSingleton<IHttpService, HttpService>();
-            serviceCollection.AddSingleton<PerformanceTester>();
+        // Step 1: Build Configuration
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory()) // Set working directory
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) // Read appsettings.json
+            .Build();
 
-            var serviceProvider = serviceCollection.BuildServiceProvider();
+        services.AddSingleton<IConfiguration>(configuration);
 
-            // Resolve PerformanceTester and Run Tests
-            var performanceTester = serviceProvider.GetRequiredService<PerformanceTester>();
-            performanceTester.RunPerformanceTests();
+        // Step 2: Register services
+        services.Configure<ShopifyConfiguration>(configuration.GetSection("ShopifyConfiguration"));
+        services.AddSingleton<IShopifyConfiguration>(sp =>
+            sp.GetRequiredService<IOptions<ShopifyConfiguration>>().Value);
 
-            // Keep Console Open
-            Console.WriteLine("\nPress any key to exit...");
-            Console.ReadKey();
-          
-        }
-    }
-}
+        services.AddHttpClient(); // Register HttpClient
+
+        // Register other services
+        services.AddSingleton<IHttpService, HttpService>();
+        services.AddSingleton<IGenericTokenClient, GenericTokenClient>();
+        services.AddSingleton<PerformanceTester>();
+
+        // Additional registrations
+        services.AddSingleton<AppConfig>();
+    });
+
+var host = builder.Build();
+
+// Step 3: Resolve and run
+var performanceTester = host.Services.GetRequiredService<PerformanceTester>();
+await performanceTester.RunPerformanceTests();
+

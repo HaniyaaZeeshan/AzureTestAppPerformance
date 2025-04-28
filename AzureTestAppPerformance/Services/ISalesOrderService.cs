@@ -9,6 +9,6 @@ namespace AzureTestAppPerformance.Services
 {
     public interface ISalesOrderService
     {
-        Task<IEnumerable<SalesOrder>> GetAllOrdersAsync();
+        Task<SalesOrderRequest> GetSalesOrderRequestAsync();
     }
 }

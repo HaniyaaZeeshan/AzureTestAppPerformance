@@ -10,7 +10,6 @@ namespace AzureTestAppPerformanceTest
     {
         private readonly IGenericTokenClient _genericTokenClient;
         private readonly IShopifyConfiguration _shopifyConfiguration;
-
         public GenerateToken(
             IGenericTokenClient genericTokenClient,
             IShopifyConfiguration shopifyConfiguration)

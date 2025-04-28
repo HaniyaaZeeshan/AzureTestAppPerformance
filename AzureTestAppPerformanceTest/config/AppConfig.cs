@@ -23,5 +23,6 @@ namespace AzureTestAppPerformanceTest.config
 
         // Expose the full endpoint as a property
         public string GetSalesOrderEndpoint => $"{_configuration["baseURL"]}{_configuration["GetSalesOrderEndpoint"]}";
+        public string GetD365EndPoint => $"{_configuration["D365BaseUrl"]}{_configuration["D365Endpoint"]}";
     }
 }

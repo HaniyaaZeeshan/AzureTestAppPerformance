@@ -1,6 +1,9 @@
-﻿using System;
+﻿using NATS.Client;
+using Renci.SshNet.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -15,7 +18,16 @@ namespace AzureTestAppPerformanceTest.Services
         {
             _httpClient = httpClient;
         }
+        public async Task AddAuthorizationHeader(string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
 
+        // Method to add Ocp-Apim-Subscription-Key header
+        public async Task AddSubscriptionKeyHeader(string subscriptionKey)
+        {
+            _httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+        }
         public async Task<T?> GetAsync<T>(string endpoint)
         {
             var response = await _httpClient.GetAsync(endpoint);
