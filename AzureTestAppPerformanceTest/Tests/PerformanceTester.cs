@@ -37,7 +37,7 @@ namespace AzureTestAppPerformanceTest.Tests
             // 1. GET Sales Orders - Constant Load
             var constantLoadScenario = Scenario.Create("GET Sales Orders - Constant Load", async context =>
             {
-                var salesOrders = await _httpService.GetListAsync<SalesOrder>(_config.GetSalesOrderEndpoint);
+                // Send the POST request with the SalesOrderRequest payload
 
                 return salesOrders != null && salesOrders.Any() ? Response.Ok() : Response.Fail();
             })
