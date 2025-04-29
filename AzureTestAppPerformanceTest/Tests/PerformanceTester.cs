@@ -142,16 +142,20 @@ namespace AzureTestAppPerformanceTest.Tests
             // Generate the SalesOrderRequest using Bogus
             //var salesOrderRequestService = new SalesOrderService();
             //var salesOrderRequest = await salesOrderRequestService.GetSalesOrderRequestAsync();
+            var wrapper = new SalesOrderRequestWrapper
+            {
+                SalesOrders = salesOrderRequest
+            };
 
 
             // 1. GET Sales Orders - Constant Load
             var constantLoadScenario = Scenario.Create("GET Sales Orders - Constant Load", async context =>
             {
                 // Send the POST request with the SalesOrderRequest payload
-                var salesOrders = await _httpService.PostAsync<SalesOrderRequest, List<SalesOrderRequest>>(_config.GetD365EndPoint, salesOrderRequest);
+                var response = await _httpService.PostAsync<SalesOrderRequestWrapper, ShopifyApiResponse>(_config.GetD365EndPoint, wrapper, token, _shopifyConfiguration.SubscriptionId);
+                Console.WriteLine($"Response: Success = {response?.Success}, Message = {response?.Message}");
 
-                // Check if we received sales orders and return OK/Fail response
-                return salesOrders != null && salesOrders.Any() ? Response.Ok() : Response.Fail();
+                return response != null && response.Success ? Response.Ok() : Response.Fail();
             })
             .WithWarmUpDuration(TimeSpan.FromSeconds(_testSettings.WarmUpDurationInSeconds)) // Set warm-up duration
             .WithLoadSimulations(Simulation.KeepConstant(copies: _testSettings.LoadSimulation.UserCount, TimeSpan.FromSeconds(_testSettings.LoadSimulation.DurationInSeconds))); // Constant user load

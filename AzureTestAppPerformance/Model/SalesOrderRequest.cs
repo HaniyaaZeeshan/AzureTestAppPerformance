@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace AzureTestAppPerformance.Model
 {
-
+    public class SalesOrderRequestWrapper
+    {
+        [JsonProperty("_salesOrders")]
+        public SalesOrderRequest SalesOrders { get; set; }
+    }
     public class SalesOrderRequest
     {
         public string CurrentCompany { get; set; }
